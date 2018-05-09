@@ -11,7 +11,6 @@ import { Book } from '../../models/book';
 
 @Injectable()
 export class BookRepositoryProvider {
-  book: Book = {} as Book;
   books: Observable<Book[]>;
 
   constructor(private firebase: AngularFirestore) {
