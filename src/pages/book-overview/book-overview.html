@@ -8,5 +8,30 @@
 
 
 <ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+      <div *ngFor="let book in books | async">
+        <ion-card>
+          <ion-card-header>
+            {{book.title}}
+          </ion-card-header>
+
+          <ion-card-content>
+            <div *ngIf="book.img" class="card-image">
+              <img [src]="book.img" />
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
