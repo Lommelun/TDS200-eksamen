@@ -6,31 +6,30 @@
 
 </ion-header>
 
-
 <ion-content padding>
-    <div *ngIf="!(auth.user | async)">
-    
-      <ion-list inset>
+  <div *ngIf="!(auth.user | async)">
 
-        <ion-item>
-          <ion-label>Username</ion-label>
-          <ion-input type="text" [(ngModel)]="username" placeholder="email"></ion-input>
-        </ion-item>
-      
-        <ion-item>
-          <ion-label>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="password" placeholder="password"></ion-input>
-        </ion-item>
-      
-        <ion-item>
-            <button ion-button (click)="register()" [disabled]="!username || !password">Signup</button>
-            <button ion-button (click)="login()" [disabled]="!username || !password">Login</button>
-        </ion-item>
+    <ion-list inset>
 
-      </ion-list>
+      <ion-item>
+        <ion-label>Username</ion-label>
+        <ion-input type="text" [(ngModel)]="username" placeholder="email"></ion-input>
+      </ion-item>
 
-    </div>
-  
+      <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" placeholder="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button (click)="register()" [disabled]="!username || !password">Signup</button>
+        <button ion-button (click)="login()" [disabled]="!username || !password">Login</button>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+
   <!-- if the user is logged in, provide logout button -->
   <button (click)="logout()" *ngIf="auth.user | async">Logout</button>
 

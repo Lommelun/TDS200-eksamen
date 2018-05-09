@@ -1,49 +1,48 @@
-import { BrowserModule } from '@angular/platform-browser';
-import {} from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-
-import env from '../env';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { TabsPage } from '../pages/tabs/tabs';
 import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
-import { FireDbProvider } from '../providers/fire-db/fire-db';
-import { FireStoreProvider } from '../providers/fire-store/fire-store';
-import { HttpClient } from '@angular/common/http';
+import { FireStorageProvider } from '../providers/fire-storage/fire-storage';
+import { BookRepositoryProvider } from '../providers/firestore/book-repository';
+import { MyApp } from './app.component';
+import env from './env';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    TabsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(env),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     FireAuthProvider,
-    FireDbProvider,
-    FireStoreProvider,
-    HttpClient
+    FireStorageProvider,
+    BookRepositoryProvider,
+    Camera
   ]
 })
-export class AppModule {}
+export class AppModule { }

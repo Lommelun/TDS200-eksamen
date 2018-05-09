@@ -1,12 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Hjemmeside
     </ion-title>
-    <button ion-button (click)="logout()">Logout</button>
+    <ion-buttons end>
+      <button ion-button (click)="logout()">Logg ut</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="addBook()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
