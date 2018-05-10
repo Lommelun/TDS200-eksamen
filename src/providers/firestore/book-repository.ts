@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { Book } from '../../models/book';
+import { firestore } from 'firebase/app';
 // import { FieldValue } from '@firebase/firestore-types';
 
 /*
@@ -45,22 +46,22 @@ export class BookRepositoryProvider {
   }
 
   // Adds a book object to the database and appends timestamps
-  add(book: Book): void {
+  add(book: Book): Promise<firestore.DocumentReference> {
     // let timestamp: FieldValue = FieldValue.serverTimestamp();
-    this.firebase.collection('books').add({
+    return this.firebase.collection('books').add({
       ...book,
       // updatedAt: timestamp,
       // createdAt: timestamp
-    }).catch(error => console.error(error));
+    });
   }
 
   // Updates an existing book from Book object and updates timestamp
-  update(book: Book): void {
+  update(book: Book): Promise<void> {
     // let timestamp: FieldValue = FieldValue.serverTimestamp();
-    this.firebase.doc('books/' + book.id).update({
+    return this.firebase.doc('books/' + book.id).update({
       ...book,
       // updatedAt: timestamp
-    }).catch(error => console.error(error));
+    });
   }
 
 }

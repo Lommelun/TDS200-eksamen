@@ -7,11 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-searchbar id="searchbar" placeholder="Søk etter bok (ISBN)"
-                [(ngModel)]="searchQuery"
-                [showCancelButton]="shouldShowCancel"
-                (ionInput)="fetchBookInfoByISBN()"
-                debounce="500"></ion-searchbar>
+  <ion-searchbar id="searchbar" placeholder="Søk etter bok (ISBN)" [(ngModel)]="searchQuery" [showCancelButton]="shouldShowCancel"
+    (ionInput)="fetchBookInfoByISBN()" debounce="500"></ion-searchbar>
 
   <ion-grid>
     <ion-row>
@@ -51,20 +48,20 @@
       </ion-col>
     </ion-row>
 
-    <div *ngIf="image">
-      <ion-row>
-        <ion-col col-12>
-          <div style="overflow:hidden; width:100%; max-height: 400px;">
-            <img [src]="'data:image/png;base64,' + image" />
-          </div>
-        </ion-col>
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col col-sm-12 col-md-5>
-          <button ion-button full (click)="uploadImage()">Last opp</button>
-        </ion-col>
-      </ion-row> -->
-    </div>
+    <ion-row *ngIf="!image && loadingPreviewImage">
+      <ion-col col-12>
+        <ion-spinner></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="image">
+      <ion-col col-12>
+        <div style="overflow:hidden; width:100%; max-height: 400px;">
+          <img [src]="image" />
+        </div>
+      </ion-col>
+    </ion-row>
 
     <ion-row style="margin-top:2em">
       <ion-col col-12>
