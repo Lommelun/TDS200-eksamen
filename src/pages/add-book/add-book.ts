@@ -6,6 +6,7 @@ import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-an
 import Moment from 'moment';
 import { Book } from '../../models/book';
 import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
+import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 
 @IonicPage()
 @Component({
@@ -29,10 +30,13 @@ export class AddBookPage {
     public navParams: NavParams,
     public loadingCtl: LoadingController,
     public firestorage: AngularFireStorage,
+    private auth: FireAuthProvider,
     public bookRepo: BookRepositoryProvider,
     public http: HttpClient,
     public camera: Camera
-  ) { }
+  ) { 
+    this.auth.authState.subscribe(user => this.book.seller = user.uid);
+  }
 
   fetchBookInfoByISBN(): void {
     if (this.searchQuery.length < 10) return;
@@ -110,6 +114,7 @@ export class AddBookPage {
   }
 
   async submit() {
+    if(this.book.seller) return;
     let loading = this.loadingCtl.create({
       content: 'Legger ut annonse...'
     });

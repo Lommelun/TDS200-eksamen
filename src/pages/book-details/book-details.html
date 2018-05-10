@@ -6,7 +6,16 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
+  <p>{{book.title}}</p>
+  <p>{{book.writer}}</p>
+  <p>{{book.publisher}}</p>
+  <p>{{book.published_year}}</p>
+  <img [src]="book.img" />
+  <p>{{seller.name}}</p>
+  <img [src]="seller.image" />
+  <p>{{book.createdAt}}</p>
+  <p>{{book.updatedAt}}</p>
+  
 </ion-content>

@@ -6,11 +6,10 @@ import { firestore } from 'firebase/app';
 
 /*
   A user repository provider for fetching and manipulating data from the user collection
-  in firebase. Also provides a locally cached Observable from the collection.
+  in firebase.
 */
 @Injectable()
 export class UserDaoProvider {
-  users: Observable<User[]>;
 
   constructor(private firebase: AngularFirestore) { }
 
@@ -27,10 +26,10 @@ export class UserDaoProvider {
   }
 
   // Returns an Observable that emits only the collection data
-  getUserById(uid: string): User {
-    let user;
-    this.firebase.collection<User>('users').doc(uid).valueChanges().subscribe(result => { user = result });
-    return user;
+  getUserById(uid: string): Promise<any> {
+    return this.firebase.collection('users')
+      .doc(uid)
+      .ref.get();
   }
 
   // Adds a user object to the database and appends timestamps

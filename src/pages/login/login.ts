@@ -96,7 +96,7 @@ export class LoginPage {
   }
 
   uploadImage(): Promise<string> {
-    const fileRef: string = `users/${localStorage.getItem('user-email')}_${new Date().getTime()}.jpeg`;
+    const fileRef: string = `users/${this.user.username}_${new Date().getTime()}.jpeg`;
     return this.firestorage.uploadAsDataUrl(fileRef, this.image);
   }
 
