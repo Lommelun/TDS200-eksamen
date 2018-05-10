@@ -16,6 +16,7 @@ import { BookRepositoryProvider } from '../providers/firestore/book-repository';
 import { MyApp } from './app.component';
 import env from './env';
 import { UserDaoProvider } from '../providers/firestore/user-dao';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserDaoProvider } from '../providers/firestore/user-dao';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    HttpClientModule
+    HttpClientModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -3,11 +3,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Book } from '../../models/book';
 import { UserDaoProvider } from '../../providers/firestore/user-dao';
 import { User } from '../../models/user';
+import Moment from 'moment';
 
 @IonicPage()
 @Component({
   selector: 'page-book-details',
-  templateUrl: 'book-details.html',
+  templateUrl: 'book-details.html'
 })
 export class BookDetailsPage {
   book: Book = {} as Book;

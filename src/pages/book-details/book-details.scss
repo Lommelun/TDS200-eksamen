@@ -1,3 +1,17 @@
 page-book-details {
-
+    .card-container {
+        ion-avatar {
+            overflow: hidden;
+        }
+    }
+    .card-image-container{
+        width: 45%;
+        float: left;
+        margin-right: .8em;
+        margin-bottom: .8em;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
 }
