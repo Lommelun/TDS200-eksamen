@@ -15,8 +15,10 @@ export class BookRepositoryProvider {
   books: Observable<Book[]>;
 
   constructor(private firebase: AngularFirestore) {
-    /* Enables a local persistence cache that can hold loaded documents and collections, 
-       keep updates and additions to update later */
+      /* 
+      Enables a local persistence cache that can hold loaded documents and collections, 
+      keep updates and additions to update later 
+      */
     firebase.firestore.enablePersistence()
       .then(success => console.info('Enabled offline persistence cache', success))
       .catch(error => console.warn('Could not enable offline persistence cache', error));
@@ -47,20 +49,20 @@ export class BookRepositoryProvider {
 
   // Adds a book object to the database and appends timestamps
   add(book: Book): Promise<firestore.DocumentReference> {
-    // let timestamp: FieldValue = FieldValue.serverTimestamp();
+    let timestamp: firestore.FieldValue = firestore.FieldValue.serverTimestamp();
     return this.firebase.collection('books').add({
       ...book,
-      // updatedAt: timestamp,
-      // createdAt: timestamp
+      updatedAt: timestamp,
+      createdAt: timestamp
     });
   }
 
   // Updates an existing book from Book object and updates timestamp
   update(book: Book): Promise<void> {
-    // let timestamp: FieldValue = FieldValue.serverTimestamp();
+    let timestamp: firestore.FieldValue = firestore.FieldValue.serverTimestamp();
     return this.firebase.doc('books/' + book.id).update({
       ...book,
-      // updatedAt: timestamp
+      updatedAt: timestamp
     });
   }
 
