@@ -117,8 +117,10 @@ export class AddBookPage {
     loading.present();
     if (this.uploadToStorage) await this.uploadImage().then(url => this.book.img = url);
     await this.bookRepo.add(this.book);
-    loading.dismiss();
     this.navCtrl.pop();
+    loading.setSpinner('hide');
+    loading.setContent('Ferdig!');
+    loading.setDuration(700);
   }
 
   validate(): boolean {

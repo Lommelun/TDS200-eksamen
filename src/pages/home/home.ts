@@ -15,6 +15,7 @@ export class HomePage {
 
   logout() {
     this.auth.logout();
+    this.navCtrl.push('LoginPage');
   }
 
   addBook() {

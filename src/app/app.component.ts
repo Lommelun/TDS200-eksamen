@@ -16,7 +16,7 @@ export class MyApp {
     splashScreen: SplashScreen,
     fireauth: FireAuthProvider) {
     const authState$ = fireauth.authState.subscribe(user => {
-       this.rootPage = user ? TabsPage : 'LoginPage';
+      this.rootPage = user ? TabsPage : 'LoginPage';
     });
 
     platform.ready().then(() => {

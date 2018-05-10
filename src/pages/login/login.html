@@ -12,25 +12,76 @@
     <ion-list inset>
 
       <ion-item>
-        <ion-label>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="username" placeholder="email"></ion-input>
+        <ion-label fixed>Brukernavn</ion-label>
+        <ion-input type="email" [(ngModel)]="user.username" placeholder="Epost"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="password" placeholder="password"></ion-input>
+        <ion-label fixed>Passord</ion-label>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Passord"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <button ion-button (click)="register()" [disabled]="!username || !password">Signup</button>
-        <button ion-button (click)="login()" [disabled]="!username || !password">Login</button>
-      </ion-item>
+      <ion-grid *ngIf="!registering">
+        <ion-row class="login-menu-buttons">
+          <ion-col col-6>
+            <button ion-button full (click)="login()" [disabled]="!user.username || !password">Logg inn</button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button full (click)="startRegistration()" [disabled]="!user.username || !password">Registrer deg</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
+      <div class="registering-input-fields" *ngIf="registering">
+        <ion-item>
+          <ion-label floating>Navn</ion-label>
+          <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Alder</ion-label>
+          <ion-input type="number" [(ngModel)]="user.age"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Adresse</ion-label>
+          <ion-input type="text" [(ngModel)]="user.address.street"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="user.address.street">
+          <ion-label floating>By</ion-label>
+          <ion-input type="text" [(ngModel)]="user.address.city"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Telefon</ion-label>
+          <ion-input type="tel" [(ngModel)]="user.phone" required pattern=".[0-9]{8,}"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="image">
+          <div class="registering-image">
+            <img [src]="image" />
+          </div>
+        </ion-item>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <button ion-button full (click)="selectPicture(1)">Ta bilde</button>
+            </ion-col>
+            <ion-col col-6>
+              <button ion-button full (click)="selectPicture(0)">Velg bilde</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <button ion-button full (click)="register()" [disabled]="!user.username || !password">Registrer</button>
+      </div>
     </ion-list>
 
   </div>
 
-  <!-- if the user is logged in, provide logout button -->
+  <!-- if the user is logged in and managed to get to login page, provide logout button -->
   <button (click)="logout()" *ngIf="auth.user | async">Logout</button>
 
 </ion-content>

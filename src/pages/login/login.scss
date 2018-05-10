@@ -1,3 +1,14 @@
 page-login {
+    .registering-input-fields {
+        margin-top: 1em;
+    }
 
+    .registering-image {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        img {
+            width: 100%;
+        }
+    }
 }

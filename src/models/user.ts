@@ -1,8 +1,13 @@
 export interface User {
-    id?: string,
-    name?: string,
-    image?: string,
+    uid?: string,
     username: string,
+    name: string,
+    age?: number,
+    address: {
+        street: string,
+        city: string
+    },
+    image?: string,
     createdAt?: string,
     updatedAt?: string
 }

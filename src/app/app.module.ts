@@ -11,9 +11,11 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
+import { FireStorageProvider } from '../providers/fire-storage/fire-storage';
 import { BookRepositoryProvider } from '../providers/firestore/book-repository';
 import { MyApp } from './app.component';
 import env from './env';
+import { UserDaoProvider } from '../providers/firestore/user-dao';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import env from './env';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     FireAuthProvider,
     BookRepositoryProvider,
-    Camera
+    Camera,
+    FireStorageProvider,
+    UserDaoProvider
   ]
 })
 export class AppModule { }

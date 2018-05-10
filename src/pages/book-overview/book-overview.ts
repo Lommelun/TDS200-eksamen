@@ -18,4 +18,8 @@ export class BookOverviewPage {
       this.books = this.repo.books;
   }
 
+  goToDetails(book: Book): void {
+    this.navCtrl.push('BookDetailsPage', { book });
+  }
+
 }

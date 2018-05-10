@@ -8,13 +8,14 @@
 
 <ion-content>
 
-  <ion-card *ngFor='let book of books | async'>
+  <ion-card *ngFor='let book of books | async' (click)="goToDetails(book)">
     <div>
       <div class="card-title">
         <h2>{{book.title}}</h2>
       </div>
-      <div *ngIf="book.img" class="card-image" style="float:left">
-        <img [src]="book.img" />
+      <div class="card-image" style="float:left">
+        <ion-img *ngIf="book.img" [src]="book.img"></ion-img>
+        <ion-img *ngIf="!book.img" src="../../../resources/images/ingen_bilde.png"></ion-img>
       </div>
       <div class="card-info">
         <p>{{book.writer}}</p>
