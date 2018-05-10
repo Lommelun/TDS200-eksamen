@@ -14,7 +14,7 @@ import { UserDaoProvider } from '../../providers/firestore/user-dao';
 export class LoginPage {
   public user: User = { username: '', address: {} } as User;
   password: string;
-  
+
   registering: boolean = false;
   image: string;
 
@@ -28,12 +28,13 @@ export class LoginPage {
     private camera: Camera
   ) { }
 
-  ionViewDidLoad() {
-    this.auth.logout();
-  }
-
   login() {
-    this.auth.authenticate(this.user.username, this.password);
+    this.auth.authenticate(this.user.username, this.password).catch(rejected => {
+      let loading = this.loadingCtl.create({
+        content: 'Feil bruker eller passord',
+        duration: 300
+      });
+    });
   }
 
   logout() {
@@ -44,9 +45,37 @@ export class LoginPage {
     this.registering = true;
   }
 
-  register(): void {
-    this.auth.register(this.user.username, this.password);
+  async register() {
+    if ((this.user.username == null) && this.password == null) return;
+
+    let loading = this.loadingCtl.create({
+      content: 'Oppretter bruker...'
+    });
+
+    loading.present();
+
+    try {
+      await this.auth.register(this.user.username, this.password);
+      if (this.image) await this.uploadImage().then(url => this.user.image = url);
+      await this.userDao.add(this.user);
+      await this.auth.authenticate(this.user.username, this.password);
+      loading.setSpinner('hide');
+      loading.setContent('Velkommen!');
+      setTimeout(timer => { loading.dismiss() }, 600);
+    } catch (error) {
+      console.log(error);
+      try {
+        this.auth.authenticate(this.user.username, this.password);
+        loading.setContent('Du har allerede en bruker, logger deg inn..');
+        setTimeout(timer => { loading.dismiss() }, 600);
+      } catch (error) {
+        console.log(error);
+        loading.setContent('Kunne ikke opprette bruker, sjekk feltene.');
+        setTimeout(timer => { loading.dismiss() }, 800);
+      }
+    }
   }
+
 
   requestPass(): void {
     this.auth.requestPassword(this.user.username);
@@ -71,17 +100,4 @@ export class LoginPage {
     return this.firestorage.uploadAsDataUrl(fileRef, this.image);
   }
 
-  async submit() {
-    let loading = this.loadingCtl.create({
-      content: 'Oppretter bruker...'
-    });
-
-    loading.present();
-    await this.uploadImage().then(url => this.user.image = url);
-    await this.userDao.add(this.user);
-    this.navCtrl.pop();
-    loading.setSpinner('hide');
-    loading.setContent('Velkommen!');
-    setTimeout(timer => { loading.dismiss() }, 700);
-  }
 }

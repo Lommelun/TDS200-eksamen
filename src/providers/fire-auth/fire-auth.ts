@@ -15,37 +15,29 @@ export class FireAuthProvider {
     });
   }
 
-  public register(email: string, password: string) {
+  public register(email: string, password: string): Promise<any> {
     if (this.validateEmail(email)) {
       console.warn('Please enter a valid email.');
       return;
     }
 
-    this.fireauth.auth.createUserWithEmailAndPassword(email, password)
-      .then((response) => console.log('Registered', response))
-      .catch((error) => console.error('Failed registering new user:', error));
+    return this.fireauth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  public requestPassword(username: string) {
-    this.fireauth.auth.sendPasswordResetEmail(username)
-      .catch(error => console.error(error));
+  public requestPassword(username: string): Promise<any> {
+    return this.fireauth.auth.sendPasswordResetEmail(username);
   }
 
-  public authenticate(email: string, password: string) {
+  public authenticate(email: string, password: string): Promise<any> {
     if (this.validateEmail(email)) {
       console.warn('Please enter a valid email.');
       return;
     }
-
-    this.fireauth.auth.signInWithEmailAndPassword(email, password)
-      .then((response) => console.info('Logged you in', response))
-      .catch((error) => console.error('', error));
+    return this.fireauth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  public logout() {
-    this.fireauth.auth.signOut()
-      .then((success) => console.info('Logged out!', success))
-      .catch((error) => console.error('Failed logging out: ', error));
+  public logout(): Promise<any> {
+    return this.fireauth.auth.signOut();
   }
 
   // Checks that the input email is in the format of an email

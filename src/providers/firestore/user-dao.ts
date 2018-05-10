@@ -12,15 +12,7 @@ import { firestore } from 'firebase/app';
 export class UserDaoProvider {
   users: Observable<User[]>;
 
-  constructor(private firebase: AngularFirestore) {
-      /* 
-      Enables a local persistence cache that can hold loaded documents and collections, 
-      keep updates and additions to update later 
-      */
-    firebase.firestore.enablePersistence()
-      .then(success => console.info('Enabled offline persistence cache', success))
-      .catch(error => console.warn('Could not enable offline persistence cache', error));
-  }
+  constructor(private firebase: AngularFirestore) { }
 
   // Returns an Observable that emits the collection data with id's prepended
   getCollectionWithIds(): Observable<User[]> {

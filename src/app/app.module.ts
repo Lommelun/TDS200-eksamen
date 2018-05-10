@@ -26,7 +26,7 @@ import { UserDaoProvider } from '../providers/firestore/user-dao';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(env),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFireStorageModule,
     HttpClientModule

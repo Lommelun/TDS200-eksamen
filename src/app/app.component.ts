@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Platform } from 'ionic-angular';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
+import firestore from 'firebase/app';
 
 @Component({
   templateUrl: 'app.html'

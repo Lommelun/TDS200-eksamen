@@ -14,8 +14,10 @@ export class HomePage {
     public auth: FireAuthProvider) { }
 
   logout() {
-    this.auth.logout();
-    this.navCtrl.push('LoginPage');
+    this.auth.logout().then(success => {
+      this.navCtrl.setRoot('LoginPage');
+      this.navCtrl.push('LoginPage');
+    }).catch(error => console.error(error));
   }
 
   addBook() {

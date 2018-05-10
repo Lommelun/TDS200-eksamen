@@ -14,8 +14,8 @@
         <h2>{{book.title}}</h2>
       </div>
       <div class="card-image" style="float:left">
-        <ion-img *ngIf="book.img" [src]="book.img"></ion-img>
-        <ion-img *ngIf="!book.img" src="../../../resources/images/ingen_bilde.png"></ion-img>
+        <img *ngIf="book.img" [src]="book.img"/>
+        <img *ngIf="!book.img" src="../../../resources/images/ingen_bilde.png"/>
       </div>
       <div class="card-info">
         <p>{{book.writer}}</p>
