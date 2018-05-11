@@ -21,8 +21,8 @@
         <img [src]="user.image" />
       </div>
       <h2>{{user.name}}</h2>
-      <p>{{user.age}}{{}}</p>
-      <p></p>
+      <p *ngIf="user.age">{{user.age}}</p>
+      <p *ngIf="user.address.city">{{user.address.city}}</p>
     </ion-item>
   </ion-card>
 
@@ -33,7 +33,7 @@
       </div>
       <div class="card-image" style="float:left">
         <img *ngIf="book.img" [src]="book.img" />
-        <img *ngIf="!book.img" src="../../assets/imgs/ingen_bilde.png" />
+        <img *ngIf="!book.img" src="assets/imgs/ingen_bilde.png" />
       </div>
       <div class="card-info">
         <p>{{book.writer}}</p>
