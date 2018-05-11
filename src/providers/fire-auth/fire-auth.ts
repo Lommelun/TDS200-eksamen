@@ -10,6 +10,7 @@ export class FireAuthProvider {
   constructor(public fireauth: AngularFireAuth) {
     this.authState = fireauth.authState;
     this.authState.subscribe(user => {
+      // Stores a local cache on the phone for easy access of the current user email and id
       localStorage.setItem('user-email', user.email);
       localStorage.setItem('user-uid', user.uid);
     });

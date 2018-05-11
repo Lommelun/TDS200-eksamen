@@ -17,6 +17,10 @@ export class BookOverviewPage {
     public navParams: NavParams,
     public repo: BookRepositoryProvider
   ) {
+    /* 
+    BookRepository keeps track of lates books and keeps an app-wide cache ready.
+    The cache reference is gotten here.
+    */
     this.books = this.repo.books;
   }
 

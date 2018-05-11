@@ -118,6 +118,10 @@ export class AddBookPage {
     }).catch(error => console.error('Something went wrong getting the picture: ', error));
   }
 
+  /*
+  Uses the storage provider to upload the image. The provider returns a promise with the progress
+  and this function returns the promise that resolves in the uploaded file url.
+  */
   uploadImage(): Promise<string> {
     const filename: string = `books/${localStorage.getItem('user-email')}_${new Date().getTime()}.jpeg`;
 
@@ -128,6 +132,13 @@ export class AddBookPage {
     return task.downloadURL().toPromise();
   }
 
+  /*
+  Checks if the seller is set (seller = current user) and opens an info dialog.
+  If the user has taken or attached a picture, then the picture is uploaded to 
+  Firebase Storage and the url is put into the Book object for storage.
+  If adding the book document is successful the user is navigated back to
+  the main page and the dialog displays a confirmation message.
+  */
   async submit(): Promise<void> {
     if (!this.book.seller) return;
     let loading = this.loadingCtl.create({
@@ -143,6 +154,10 @@ export class AddBookPage {
     setTimeout(() => loading.dismiss(), 800);
   }
 
+  /*
+  Validates that there is something in the input fields
+  or disables the publish button otherwise.
+  */
   validate(): void {
     if (this.book.title.length < 2) this.valid = false;
     if (this.book.writer.length < 2) this.valid = false;

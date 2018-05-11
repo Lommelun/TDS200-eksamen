@@ -27,6 +27,10 @@ export class UserprofilePage {
     this.books = this.getUserUploadedBooks();
   }
 
+  /*
+  Gets the user data of the currently logged in user and sets it locally
+  Also gets the current users uploaded books and sets them locally
+  */
   async getUserData(): Promise<void> {
     await this.userDao.getUserById(firebase.auth().currentUser.uid)
       .then(user => this.user = (user.exists) ? user.data() : null);
@@ -41,5 +45,5 @@ export class UserprofilePage {
   goToDetails(book: Book): void {
     this.navCtrl.push('BookDetailsPage', { book });
   }
-  
+
 }

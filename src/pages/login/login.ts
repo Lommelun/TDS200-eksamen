@@ -48,6 +48,7 @@ export class LoginPage {
     this.auth.logout();
   }
 
+  // Enables registering fields and shows actual register button.
   startRegistration(): void {
     this.registering = true;
   }
@@ -102,8 +103,12 @@ export class LoginPage {
   }
 
 
-  requestPass(): void {
-    this.auth.requestPassword(this.user.username);
+  /*
+  Not implemented fully, but it requests a password reset email for the user currently 
+  specified in the username field. 
+  */
+  requestPass(): Promise<void> {
+    return this.auth.requestPassword(this.user.username);
   }
 
   /*
@@ -126,6 +131,7 @@ export class LoginPage {
     });
   }
 
+  // Uploads the attached picture to the Firebase Storage with a unique name
   uploadImage(): Promise<string> {
     const fileRef: string = `users/${this.user.username}_${new Date().getTime()}.jpeg`;
     return this.firestorage.uploadAsDataUrl(fileRef, this.image);

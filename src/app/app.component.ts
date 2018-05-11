@@ -16,6 +16,11 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     fireauth: FireAuthProvider) {
+    /* 
+    Keeps the user logged in and keeps track of the authentication state.
+    If the user is logged in, the root page is set to the main app - otherwise
+    the user is forced to the login page.
+    */
     const authState$ = fireauth.authState.subscribe(user => {
       this.rootPage = user ? TabsPage : 'LoginPage';
     });

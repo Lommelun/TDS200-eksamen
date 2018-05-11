@@ -24,12 +24,20 @@ export class BookDetailsPage {
     private toast: ToastController
   ) {
     this.seller = { username: '', name: '', age: null, address: { street: '', city: '' }, image: '' } as User;
+
+    // Gets the book passed into the navparams when navigating here and stores it locally
     this.book = navParams.get('book');
+
+    // Gets the user info of the seller and stores locally
     this.userDao.getUserById(this.book.seller).then(user => {
       this.seller = (user.exists) ? user.data() : null;
     }).catch(err => console.log(err));
   }
 
+  /*
+  Provides a deletion of the book if the user is the currently logged in user. 
+  Probably needs more security checking
+  */
   deleteBook(book: Book) {
     this.bookRepo.delete(book.id);
     this.navCtrl.pop();
