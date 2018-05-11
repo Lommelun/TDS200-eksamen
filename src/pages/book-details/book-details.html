@@ -16,9 +16,10 @@
       <p>Lagt ut av {{seller.name}}</p>
       <p>{{book.createdAt | humanify}}</p>
     </ion-item>
-    
+
     <div class="card-image-container">
-      <img [src]="book.img" />
+      <img *ngIf="book.img" [src]="book.img" />
+      <img *ngIf="!book.img" [src]="../../assets/imgs/ingen_bilde.png" />
     </div>
 
     <ion-card-content>
@@ -26,7 +27,7 @@
       <p>{{book.publisher}}</p>
       <p>{{book.published_year}}</p>
     </ion-card-content>
-    
+
     <a ion-button full [href]="'mailto:' + seller.username">Kontakt selger</a>
   </ion-card>
 
