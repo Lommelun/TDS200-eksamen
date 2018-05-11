@@ -36,7 +36,7 @@ export class BookDetailsPage {
     this.toast.create({
       message: 'Slettet!',
       duration: 800
-    }) 
+    }).present();
   }
 
 }
