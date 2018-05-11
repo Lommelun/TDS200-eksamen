@@ -5,6 +5,7 @@ import { UserDaoProvider } from '../../providers/firestore/user-dao';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
 import { Book } from '../../models/book';
+import firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ import { Book } from '../../models/book';
 })
 export class UserprofilePage {
   books: Book[];
-  user: User = {} as User;
+  user: User = { address: {} } as User;
 
   constructor(
     public navCtrl: NavController,
@@ -21,13 +22,14 @@ export class UserprofilePage {
     public userDao: UserDaoProvider,
     private auth: FireAuthProvider,
     private bookRepo: BookRepositoryProvider
-  ) {
-    this.getUserData().then(success => this.getUserUploadedBooks());
-  }
+  ) { this.getUserData(); }
 
-  getUserData(): Promise<any> {
-    this.auth.authState.subscribe(user => { this.user.uid = user.uid });
-    return this.userDao.getUserById(this.user.uid);
+  async getUserData() {
+    console.log(firebase.auth().currentUser.uid)
+    await this.userDao.getUserById(firebase.auth().currentUser.uid)
+      .then(user => this.user = (user.exists) ? user.data() : null);
+      console.log(this.user);
+    this.getUserUploadedBooks();
   }
 
   getUserUploadedBooks() {

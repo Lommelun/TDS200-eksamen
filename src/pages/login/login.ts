@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FireStorageProvider } from '../../providers/fire-storage/fire-storage';
 import { UserDaoProvider } from '../../providers/firestore/user-dao';
+import firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -30,9 +31,9 @@ export class LoginPage {
 
   login() {
     this.auth.authenticate(this.user.username, this.password).catch(rejected => {
-      let loading = this.loadingCtl.create({
+      this.loadingCtl.create({
         content: 'Feil bruker eller passord',
-        duration: 300
+        duration: 600
       });
     });
   }
@@ -56,20 +57,21 @@ export class LoginPage {
 
     try {
       await this.auth.register(this.user.username, this.password);
+      
+
       if (this.image) await this.uploadImage().then(url => this.user.image = url);
+
       await this.userDao.add(this.user);
-      await this.auth.authenticate(this.user.username, this.password);
+
       loading.setSpinner('hide');
       loading.setContent('Velkommen!');
       setTimeout(timer => { loading.dismiss() }, 600);
     } catch (error) {
-      console.log(error);
       try {
         this.auth.authenticate(this.user.username, this.password);
         loading.setContent('Du har allerede en bruker, logger deg inn..');
         setTimeout(timer => { loading.dismiss() }, 600);
       } catch (error) {
-        console.log(error);
         loading.setContent('Kunne ikke opprette bruker, sjekk feltene.');
         setTimeout(timer => { loading.dismiss() }, 800);
       }
