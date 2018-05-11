@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import firebase from 'firebase/app';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Book } from '../../models/book';
 import { User } from '../../models/user';
 import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
@@ -20,7 +20,8 @@ export class BookDetailsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userDao: UserDaoProvider,
-    private bookRepo: BookRepositoryProvider
+    private bookRepo: BookRepositoryProvider,
+    private toast: ToastController
   ) {
     this.seller = { username: '', name: '', age: null, address: { street: '', city: '' }, image: '' } as User;
     this.book = navParams.get('book');
@@ -31,6 +32,11 @@ export class BookDetailsPage {
 
   deleteBook(book: Book) {
     this.bookRepo.delete(book.id);
+    this.navCtrl.pop();
+    this.toast.create({
+      message: 'Slettet!',
+      duration: 800
+    }) 
   }
 
 }

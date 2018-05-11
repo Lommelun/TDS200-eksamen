@@ -38,4 +38,8 @@ export class UserprofilePage {
       .map(arr => arr.filter(book => book.seller == firebase.auth().currentUser.uid));
   }
 
+  goToDetails(book: Book): void {
+    this.navCtrl.push('BookDetailsPage', { book });
+  }
+  
 }
