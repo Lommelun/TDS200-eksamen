@@ -17,22 +17,22 @@
         <ion-list>
           <ion-item>
             <ion-label floating>Tittel</ion-label>
-            <ion-input type="text" (input)="validate()" [(ngModel)]="book.title" required pattern=".{1,}"></ion-input>
+            <ion-input type="text" (ngModelChange)="validate()" [(ngModel)]="book.title" required pattern=".{1,}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label floating>Forfatter</ion-label>
-            <ion-input type="text" (input)="validate()" [(ngModel)]="book.writer" required pattern=".{2,}"></ion-input>
+            <ion-input type="text" (ngModelChange)="validate()" [(ngModel)]="book.writer" required pattern=".{2,}"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label floating>Utgiver</ion-label>
-            <ion-input type="text" (input)="validate()" [(ngModel)]="book.publisher"></ion-input>
+            <ion-input type="text" (ngModelChange)="validate()" [(ngModel)]="book.publisher"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label floating>Utgivelsesår</ion-label>
-            <ion-input type="number" (input)="validate()" [(ngModel)]="book.published_year" required pattern="[0-9]{2,4}"></ion-input>
+            <ion-input type="number" (ngModelChange)="validate()" [(ngModel)]="book.published_year" required pattern="[0-9]{2,4}"></ion-input>
           </ion-item>
         </ion-list>
 

@@ -8,6 +8,7 @@ import * as env from '../../app/env';
 import { Book } from '../../models/book';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
+import firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,7 @@ export class AddBookPage {
     public camera: Camera
   ) {
     this.book = { title: '', writer: '', publisher: '', published_year: null, seller: '', img: '' };
-    this.auth.authState.subscribe(user => this.book.seller = user.uid);
+    this.book.seller = firebase.auth().currentUser.uid;
   }
 
   fetchBookInfoByISBN(): void {
@@ -92,6 +93,7 @@ export class AddBookPage {
         } else {
           this.book.published_year = null;
         }
+        this.valid = true;
       });
   }
 
@@ -127,7 +129,7 @@ export class AddBookPage {
   }
 
   async submit(): Promise<void> {
-    if (this.book.seller) return;
+    if (!this.book.seller) return;
     let loading = this.loadingCtl.create({
       content: 'Legger ut annonse...'
     });
@@ -138,7 +140,7 @@ export class AddBookPage {
     this.navCtrl.pop();
     loading.setSpinner('hide');
     loading.setContent('Ferdig!');
-    loading.setDuration(700);
+    setTimeout(() => loading.dismiss(), 800);
   }
 
   validate(): void {
