@@ -33,9 +33,12 @@ export class UserDaoProvider {
   }
 
   // Adds a user object to the database and appends timestamps
-  add(user: User): Promise<void> {
+  add(user: User, uid: string): Promise<void> {
+    console.log('getting timestamp')
     let timestamp: firestore.FieldValue = firestore.FieldValue.serverTimestamp();
-    return this.firebase.collection('users').doc(user.uid).set({
+    console.log('adding...')
+    console.log('adding...')
+    return this.firebase.collection('users').doc(uid).set({
       ...user,
       updatedAt: timestamp,
       createdAt: timestamp

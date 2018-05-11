@@ -9,19 +9,22 @@ import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public auth: FireAuthProvider) { }
+    public auth: FireAuthProvider
+  ) { }
 
-  logout() {
+  logout(): void {
     this.auth.logout().then(success => {
       this.navCtrl.setRoot('LoginPage');
       this.navCtrl.push('LoginPage');
     }).catch(error => console.error(error));
   }
 
-  addBook() {
+  addBook(): void {
     this.navCtrl.push('AddBookPage')
       .catch(error => console.error(error));
   }
+
 }

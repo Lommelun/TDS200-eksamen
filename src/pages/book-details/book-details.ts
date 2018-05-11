@@ -11,17 +11,16 @@ import Moment from 'moment';
   templateUrl: 'book-details.html'
 })
 export class BookDetailsPage {
-  book: Book = {} as Book;
-  seller: User = {} as User;
+  book: Book;
+  seller: User;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private userDao: UserDaoProvider
   ) {
-    console.log(navParams.get('book'));
+    this.seller = { username: '', name: '', age: null, address: { street: '', city: '' }, image: '' } as User;
     this.book = navParams.get('book');
-    console.log(this.book);
     this.userDao.getUserById(this.book.seller).then(user => {
       this.seller = (user.exists) ? user.data() : null;
     }).catch(err => console.log(err));

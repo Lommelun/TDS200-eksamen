@@ -4,9 +4,10 @@ import { Camera } from '@ionic-native/camera';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import Moment from 'moment';
+import * as env from '../../app/env';
 import { Book } from '../../models/book';
-import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { BookRepositoryProvider } from '../../providers/firestore/book-repository';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,7 @@ import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
   templateUrl: 'add-book.html',
 })
 export class AddBookPage {
-  book: Book = {} as Book;
+  book: Book;
 
   public searchQuery: string;
 
@@ -34,16 +35,27 @@ export class AddBookPage {
     public bookRepo: BookRepositoryProvider,
     public http: HttpClient,
     public camera: Camera
-  ) { 
+  ) {
+    this.book = { title: '', writer: '', publisher: '', published_year: null, seller: '', img: ''};
     this.auth.authState.subscribe(user => this.book.seller = user.uid);
   }
 
   fetchBookInfoByISBN(): void {
-    if (this.searchQuery.length < 10) return;
+    /*
+    Does not trigger if isbn is not at least standard isbn length (10 OR 13) 
+    and removes non-numeric characters.
+    */
     const sanitizedInput: string = this.searchQuery.replace(/[^0-9\.]+/g, '');
+    if (sanitizedInput.length < 10) return;
+
+    /*
+    Looks up the queried isbn number from IsbnDB and updates the book object
+    based on results. Api key is required in the header, and not as a GET
+    parameter, so the API key is sent in the header.
+    */
     this.http
       .get(`https://api.isbndb.com/book/${sanitizedInput}`, {
-        headers: { 'X-API-KEY': 'e1W40ny8id4J5LNw4RRXC1q1DUwWiqLP5wbA3ts1' }
+        headers: { 'X-API-KEY': env.isbndb.apiKey }
       })
       .subscribe(json => {
         const result = json['book'];
@@ -53,6 +65,14 @@ export class AddBookPage {
         this.image = result.image;
         this.book.publisher = result.publisher;
 
+        /*
+        Moment, a third party library is used to read the varying date formats
+        from the response and gets only the year, which is updated on the book
+        object if successful.
+
+        A custom format list is fed to the Moment constructor based on most 
+        formats returned from IsbnDB.
+        */
         const date = result.date_published;
         const format: Moment.MomentBuiltinFormat[] = [
           Moment.defaultFormat,
@@ -74,33 +94,25 @@ export class AddBookPage {
       });
   }
 
-  selectPicture(): void {
-    this.camera.getPicture({
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      mediaType: this.camera.MediaType.PICTURE,
-      targetHeight: 600,
-      targetWidth: 600,
-      correctOrientation: true
-    }).then(base64 => {
-      this.uploadToStorage = true;
-      this.image = `data:image/png;base64,${base64}`;
-    }).catch(error => console.error(error));
-  }
-
-  takePicture(): void {
+  /*
+  Select a picture from camera or local storage. Mode determines where and
+  is passed from the button clicked. Quality and direction are ignored
+  when fetching from the local storage.
+  */
+  selectPicture(mode: number): void {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       cameraDirection: this.camera.Direction.BACK,
       mediaType: this.camera.MediaType.PICTURE,
       targetHeight: 600,
       targetWidth: 600,
+      sourceType: mode,
       quality: 80,
       correctOrientation: true
     }).then(base64 => {
       this.uploadToStorage = true;
       this.image = `data:image/png;base64,${base64}`;
-    }).catch(error => console.error('something went wrong: ', error));
+    }).catch(error => console.error('Something went wrong getting the picture: ', error));
   }
 
   uploadImage(): Promise<string> {
@@ -113,8 +125,8 @@ export class AddBookPage {
     return task.downloadURL().toPromise();
   }
 
-  async submit() {
-    if(this.book.seller) return;
+  async submit(): Promise<void> {
+    if (this.book.seller) return;
     let loading = this.loadingCtl.create({
       content: 'Legger ut annonse...'
     });
@@ -129,6 +141,10 @@ export class AddBookPage {
   }
 
   validate(): boolean {
+    if (this.book.title.length < 2) return false;
+    if (this.book.writer.length < 2) return false;
+    if (this.book.publisher.length < 2) return false;
+    if (!this.book.published_year) return false;
     return true;
   }
 

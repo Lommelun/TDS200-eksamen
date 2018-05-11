@@ -41,10 +41,10 @@
 
     <ion-row>
       <ion-col col-6>
-        <button ion-button full (click)="takePicture()">Ta bilde</button>
+        <button ion-button full (click)="selectPicture(1)">Ta bilde</button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button full (click)="selectPicture()">Hent bilde</button>
+        <button ion-button full (click)="selectPicture(0)">Hent bilde</button>
       </ion-col>
     </ion-row>
 
@@ -65,7 +65,7 @@
 
     <ion-row style="margin-top:2em">
       <ion-col col-12>
-        <button ion-button full (click)="submit()" ng-disabled="validate()">Legg ut</button>
+        <button ion-button full (click)="submit()" [disabled]="validate()">Legg ut</button>
       </ion-col>
     </ion-row>
 

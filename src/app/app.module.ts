@@ -14,7 +14,7 @@ import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
 import { FireStorageProvider } from '../providers/fire-storage/fire-storage';
 import { BookRepositoryProvider } from '../providers/firestore/book-repository';
 import { MyApp } from './app.component';
-import env from './env';
+import * as env from './env';
 import { UserDaoProvider } from '../providers/firestore/user-dao';
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -26,7 +26,7 @@ import { PipesModule } from '../pipes/pipes.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(env),
+    AngularFireModule.initializeApp(env.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFireStorageModule,

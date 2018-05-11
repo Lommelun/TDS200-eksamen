@@ -12,10 +12,12 @@ import { Book } from '../../models/book';
 export class BookOverviewPage {
   public books: Observable<Book[]>;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public repo: BookRepositoryProvider) {
-      this.books = this.repo.books;
+    public repo: BookRepositoryProvider
+  ) {
+    this.books = this.repo.books;
   }
 
   goToDetails(book: Book): void {
