@@ -10,7 +10,7 @@
   <ion-card class="card-container">
     <ion-item>
       <ion-avatar item-end>
-        <img class="seller-image" [src]="seller.image" />
+        <img *ngIf="seller.image" class="seller-image" [src]="seller.image" />
       </ion-avatar>
       <h2>{{book.title}}</h2>
       <p>Lagt ut av {{seller.name}}</p>

@@ -16,6 +16,7 @@ import { BookRepositoryProvider } from '../../providers/firestore/book-repositor
 })
 export class AddBookPage {
   book: Book;
+  valid: boolean = false;
 
   public searchQuery: string;
 
@@ -36,7 +37,7 @@ export class AddBookPage {
     public http: HttpClient,
     public camera: Camera
   ) {
-    this.book = { title: '', writer: '', publisher: '', published_year: null, seller: '', img: ''};
+    this.book = { title: '', writer: '', publisher: '', published_year: null, seller: '', img: '' };
     this.auth.authState.subscribe(user => this.book.seller = user.uid);
   }
 
@@ -140,12 +141,15 @@ export class AddBookPage {
     loading.setDuration(700);
   }
 
-  validate(): boolean {
-    if (this.book.title.length < 2) return false;
-    if (this.book.writer.length < 2) return false;
-    if (this.book.publisher.length < 2) return false;
-    if (!this.book.published_year) return false;
-    return true;
+  validate(): void {
+    if (this.book.title.length < 2) this.valid = false;
+    if (this.book.writer.length < 2) this.valid = false;
+    if (this.book.publisher.length < 2) this.valid = false;
+    if (!this.book.published_year) {
+      this.valid = false;
+    } else {
+      this.valid = true;
+    }
   }
 
 }
