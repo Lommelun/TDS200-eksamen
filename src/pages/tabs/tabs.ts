@@ -16,7 +16,7 @@ export class TabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tabHome = 'HomePage';
     this.tabOverview = 'BookOverviewPage';
-    this.tabUser = 'AddBookPage';
+    this.tabUser = 'UserprofilePage';
   }
 
 }
