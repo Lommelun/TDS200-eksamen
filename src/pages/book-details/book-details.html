@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>book-details</ion-title>
+    <ion-title>Detaljer</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -28,7 +28,8 @@
       <p>{{book.published_year}}</p>
     </ion-card-content>
 
-    <a ion-button full [href]="'mailto:' + seller.username">Kontakt selger</a>
+    <a *ngIf="!(book.seller == currentUserId)" ion-button full [href]="'mailto:' + seller.username">Kontakt selger</a>
+    <button *ngIf="book.seller == currentUserId" ion-button end (click)="deleteBook(book)">Fjern</button>
   </ion-card>
 
 </ion-content>

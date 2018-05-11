@@ -26,6 +26,8 @@
     </ion-item>
   </ion-card>
 
+  <h1>Mine bøker</h1>
+
   <ion-card *ngFor='let book of books | async' (click)="goToDetails(book)">
     <div>
       <div class="card-title">

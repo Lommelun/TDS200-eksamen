@@ -1,4 +1,8 @@
 page-userprofile {
+    h1{
+        margin: 1em 0 1em 0;
+    }
+
     .profile-picture {
         width: 50%;
         height: auto;
@@ -6,6 +10,34 @@ page-userprofile {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+        }
+    }
+
+    .card-title {
+        padding: .5em .8em .8em .8em;
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+
+    .card-image {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        margin: 0 .6em .8em .8em;
+        img {
+            background-color: rgb(189, 208, 209);
+            width: 100%;
+            min-height: 100%;
+        }
+    }
+
+    .card-info {
+        margin: 0 .5em 0 0;
+        .card-info-publisher {
+            font-size: 12px;
+            color: rgb(163, 163, 163);
         }
     }
 }

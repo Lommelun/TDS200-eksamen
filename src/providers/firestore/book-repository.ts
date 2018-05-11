@@ -57,4 +57,8 @@ export class BookRepositoryProvider {
     });
   }
 
+  delete(id: string): Promise<void> {
+    return this.firebase.collection('books').doc(id).delete();
+  }
+
 }
